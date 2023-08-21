@@ -3,24 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/style.css">
     <title>Todo-List</title>
 </head>
 <body>
     <main>
         <header>
-            <h1>Todo-List</h1>
+            <h1>ToDo-List</h1>
         </header>
-        <div class="management-box">
-            <div class="management">
-                <!-- Management task -->
+        <div class="container">
+            <div class="management-box">
+                <div class="management">
+                    <!-- Management task -->
+                    <ul>
+                        <li>
+                            <a href="#" id="allTasks">All tasks</a>
+                        </li>
+                        <li>
+                            <a href="#" id="todayTasks">today tasks</a>
+                        </li>
+                        <li>
+                            <a href="#" id="impTasks">Important tasks</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="projects-box">
+                    <ul>
+                        <li>
+                            <a href="#">Projects</a>
+                        </li>
+                    </ul>
+                    <div class="projects">
+                        <!-- added Projects -->
+                    </div>
+                </div>
             </div>
-            <div class="projects-box">
-                <!-- Projects -->
-            </div>
-        </div>
-        <div class="task-box">
-            <div class="task">
-                <!-- Tasks -->
+            <div class="task-box">
+                <div>
+                    <h2>Content displayed</h2>
+                    <button id="addButton">+</button>
+                </div>
+                
+                <form id="task-form">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" id="title" required>
+
+                    <label for="description">Description:</label>
+                    <input type="text" name="description" id="description" required>
+
+                    <label for="dueDate">date:</label>
+                    <input type="date" name="dueDate" id="dueDate" required>
+
+                    <label for="priority">Priority:</label>
+                    <select name="priority" id="priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+
+                    <button type="submit">Add task</button>
+
+
+                </form>
+                
+                <div class="task">
+                    <!-- Tasks -->
+    
+                </div>
             </div>
         </div>
     </main>

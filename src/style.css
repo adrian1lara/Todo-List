@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+header {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+}
+
+.management-box {
+    padding: 10px;
+    min-width: 300px;
+
+}
+
+.management {
+    border-bottom: 1px solid #fff;
+}
+
+.management ul {
+    list-style: none;
+}
+
+.management ul li {
+    padding: 10px;
+}
+
+.management ul li a{
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.projects-box ul {
+    list-style: none;
+}
+
+.projects-box ul li {
+    padding: 10px;
+}
+
+.projects-box ul li a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+  }
+  
+
+#task-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 10000; 
+}
+
