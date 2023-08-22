@@ -1,19 +1,16 @@
 import Task from "./task";
 import { taskbox, tasks } from "..";
+import { format } from "date-fns";
+
 
 function allTasks() {
-    const savedTasks = localStorage.getItem('tasks');
-    const taskNodeList = JSON.parse(savedTasks).map(task => {
-        const { title, description, dueDate, priority } = task;
-        return new Task(title, description, new Date(dueDate), priority).addNewTask();
+    const div = document.createElement('div');
+    tasks.map(task => {
+        div.appendChild(task.addNewTask());
     });
 
-    const fragment = document.createDocumentFragment();
-    taskNodeList.forEach(taskNode => {
-        fragment.appendChild(taskNode);
-    });
-
-    return fragment;
+    console.log(tasks)
+    return div;
 }
 
 export default allTasks;
