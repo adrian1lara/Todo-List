@@ -1,4 +1,5 @@
 import format from 'date-fns/format';
+import { tasks } from '..';
 
 class Task {
     constructor(title, description, dueDate, priority) {
@@ -31,10 +32,17 @@ class Task {
         const taskEditButton = document.createElement('button');
         taskEditButton.className = 'edit-button';
         taskEditButton.textContent = 'Edit';
+        taskEditButton.addEventListener('click', () => {
+            this.updateTask();
+        })
         
         const taskDeleteButton = document.createElement('button');
         taskDeleteButton.className = 'delete-button';
         taskDeleteButton.textContent = 'Delete';
+        taskDeleteButton.addEventListener('click', () => {
+            this.removeTask();
+        })
+
         
         taskElement.appendChild(taskTitleElement);
         taskElement.appendChild(taskDescriptionElement);
@@ -58,6 +66,7 @@ class Task {
     }
     
     removeTask() {
+        tasks.splice(tasks.indexOf(this.addNewTask), 1);
         this.taskElement.remove();
     }
 }
