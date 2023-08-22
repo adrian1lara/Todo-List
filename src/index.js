@@ -3,11 +3,19 @@ import allTasks from "./Components/allTasks";
 import impTasks from "./Components/impTasks";
 import todayTasks from "./Components/todayTasks";
 import Task from "./Components/task";
-import { parse, format, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export let tasks = [];
 export const taskbox = document.querySelector('.task');
 const addButton = document.getElementById('addButton');
+
+let editMode = false;
+let currentEditingTask = null;
+
+export function setEditMode(taskElement) {
+    editMode = true;
+    currentEditingTask = taskElement;
+}
 
 const allTask = document.getElementById('allTasks');
 allTask.addEventListener('click', () => {
@@ -45,7 +53,6 @@ addButton.addEventListener('click', () => {
         console.log(task);
 
         tasks.push(task);
-        renderTasks(allTasks);
 
         taskForm.style.display = 'none';
         addButton.style.display = 'block';
@@ -58,17 +65,17 @@ addButton.addEventListener('click', () => {
 
 
 
-
-
-
-
-
 // render the tasks
 function renderTasks(component)  {
     taskbox.innerHTML = '';
     const taskNode = component();
     if (taskNode instanceof Node) {
-        taskbox.appendChild(taskNode);
+        if(editMode && currentEditingTask === taskNode) {
+            const editForm = document.getElementById('task-form');
+            editForm.style.display = 'flex';
+        } else {
+            taskbox.appendChild(taskNode);
+        }
     }
 }
 
