@@ -2,20 +2,9 @@
 import allTasks from "./Components/allTasks";
 import impTasks from "./Components/impTasks";
 import todayTasks from "./Components/todayTasks";
-import Task from "./Components/task";
-import { format, parseISO } from 'date-fns';
 
-export let tasks = [];
-export const taskbox = document.querySelector('.task');
-const addButton = document.getElementById('addButton');
+export const taskbox = document.getElementById('task');
 
-let editMode = false;
-let currentEditingTask = null;
-
-export function setEditMode(taskElement) {
-    editMode = true;
-    currentEditingTask = taskElement;
-}
 
 const allTask = document.getElementById('allTasks');
 allTask.addEventListener('click', () => {
@@ -33,35 +22,6 @@ impTask.addEventListener('click', () => {
     renderTasks(impTasks);
 })
 
-addButton.addEventListener('click', () => {
-    const taskForm = document.getElementById('task-form');
-
-    taskForm.style.display = 'flex';
-    addButton.style.display = 'none';
-
-    taskForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const title = document.getElementById('title');
-        const description = document.getElementById('description');
-        const dueDate = document.getElementById('dueDate');
-        const priority = document.getElementById('priority');
-
-        const date = parseISO(dueDate.value);
-        format(date, 'dd/MM/yyyy');
-        
-        const task = new Task(title.value, description.value, date, priority.value);
-        console.log(task);
-
-        tasks.push(task);
-
-        taskForm.style.display = 'none';
-        addButton.style.display = 'block';
-
-        taskForm.reset();
-
-    })
-
-})
 
 
 
@@ -69,14 +29,7 @@ addButton.addEventListener('click', () => {
 function renderTasks(component)  {
     taskbox.innerHTML = '';
     const taskNode = component();
-    if (taskNode instanceof Node) {
-        if(editMode && currentEditingTask === taskNode) {
-            const editForm = document.getElementById('task-form');
-            editForm.style.display = 'flex';
-        } else {
-            taskbox.appendChild(taskNode);
-        }
-    }
+    taskbox.appendChild(taskNode);
 }
 
 renderTasks(allTasks);
