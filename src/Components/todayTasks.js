@@ -1,6 +1,7 @@
 import { isSameDay, parseISO } from "date-fns";
 import { myTasks } from "./allTasks";
-import { taskbox } from "..";
+import { taskbox} from "..";
+import { removeTask } from "./allTasks";
 
 const displayTodayTasks = () => {
     const today = new Date()
@@ -26,10 +27,20 @@ const displayTodayTasks = () => {
         dueDateLabel.className = 'task-date';
         priorityLabel.className = 'task-priority';
 
-        titleLabel.value = task.title;
-        descriptionLabel.value = task.description;
-        dueDateLabel.value = task.date;
-        priorityLabel.value = task.priority;
+        titleLabel.textContent = task.title;
+        descriptionLabel.textContent = task.description;
+        dueDateLabel.textContent = task.date;
+        priorityLabel.textContent = task.priority;
+        deleteButton.textContent = 'Delete';
+        editButton.textContent = 'Edit';
+
+        editButton.addEventListener('click', () => {
+            console.log("Editar");
+        })
+
+        deleteButton.addEventListener('click', () => {
+            removeTask(task);
+        })
 
         console.log(task);
 
