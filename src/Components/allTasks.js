@@ -4,12 +4,12 @@ import { format, parseISO, isValid } from 'date-fns';
 
 
 
-const taskForm = document.getElementById('task-form');
+export const taskForm = document.getElementById('task-form');
 const titleInput = document.getElementById('title');
 const descriptionInput = document.getElementById('description');
 const dueDateInput = document.getElementById('dueDate');
 const priorityInput = document.getElementById('priority');
-const submitButton = document.getElementById('addTask');
+export const submitButton = document.getElementById('addTask');
 
 
 
@@ -149,4 +149,4 @@ function allTasks() {
 
 }
 
-export { allTasks, myTasks };
+export { allTasks, myTasks, removeTask, updateTask };
