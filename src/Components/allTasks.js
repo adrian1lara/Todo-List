@@ -1,7 +1,7 @@
 import Task from './task.js'
 import { taskbox } from '../index.js';
 import { format, parseISO, isValid } from 'date-fns';
-import { sub } from 'date-fns/esm';
+
 
 
 const taskForm = document.getElementById('task-form');
@@ -146,6 +146,7 @@ function allTasks() {
     addButtonClickListener();
     submitButton.addEventListener('click', createNewTask);
     displayTasks();
+
 }
 
-export default allTasks;
+export { allTasks, myTasks };

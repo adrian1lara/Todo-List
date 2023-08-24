@@ -1,10 +1,9 @@
 
-import allTasks from "./Components/allTasks";
+import { allTasks } from "./Components/allTasks";
 import impTasks from "./Components/impTasks";
 import todayTasks from "./Components/todayTasks";
 
 export const taskbox = document.getElementById('task');
-
 
 const allTask = document.getElementById('allTasks');
 allTask.addEventListener('click', () => {
@@ -21,8 +20,6 @@ const impTask = document.getElementById('impTasks');
 impTask.addEventListener('click', () => {
     renderTasks(impTasks);
 })
-
-
 
 
 // render the tasks
