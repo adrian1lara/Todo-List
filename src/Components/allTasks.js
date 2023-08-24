@@ -1,5 +1,7 @@
 import Task from './task.js'
 import { taskbox } from '../index.js';
+import { format, parseISO, isValid } from 'date-fns';
+import { sub } from 'date-fns/esm';
 
 
 const taskForm = document.getElementById('task-form');
@@ -8,10 +10,13 @@ const descriptionInput = document.getElementById('description');
 const dueDateInput = document.getElementById('dueDate');
 const priorityInput = document.getElementById('priority');
 const submitButton = document.getElementById('addTask');
-const allTaskDiv = document.createElement('div');
+
 
 
 let myTasks = []; 
+
+let selectedTask = null;
+
 
 const addButtonClickListener = () => {
     const addButton = document.getElementById('addButton');
@@ -25,32 +30,61 @@ const addButtonClickListener = () => {
 const createNewTask = () => {
     const newTitle = titleInput.value;
     const newDescription = descriptionInput.value;
-    const newDueDate = dueDateInput.value;
+    const dueDateValue = parseISO(dueDateInput.value);
     const newPriority = priorityInput.value;
 
-    if (titleInput.value === '' || descriptionInput.value === '' || dueDateInput.value === '' || priorityInput.value === '') {
+    console.log('newTitle:', newTitle);
+    console.log('newDescription:', newDescription);
+    console.log('dueDateValue:', dueDateValue);
+    console.log('newPriority:', newPriority);
+
+    if (!newTitle || !newDescription || !dueDateValue || !newPriority) {
         alert('All fields are required');
+        return;
+    }
+
+    
+    if (!isValid(dueDateValue)) {
+        alert('Invalid due date');
+        return;
+    }
+
+    if (selectedTask) {
+        selectedTask.title = newTitle;
+        selectedTask.description = newDescription;
+        selectedTask.date = format(dueDateValue, 'yyyy-MM-dd');
+        selectedTask.priority = newPriority;
+        selectedTask = null;
+        displayTasks();
     } else {
-        const newTask = new Task(newTitle, newDescription, newDueDate, newPriority);
+        const newTask = new Task(newTitle, newDescription, format(dueDateValue, 'yyyy-MM-dd'), newPriority);
         myTasks.push(newTask);
         displayTasks();
-
-        titleInput.value = '';
-        descriptionInput.value = '';
     }
-}
+
+    titleInput.value = '';
+    descriptionInput.value = '';
+    dueDateInput.value = '';
+};
+
 
 
 const displayTasks = () => {
     taskbox.innerHTML = '';
-    myTasks.forEach((task, index) => {
+    myTasks.forEach((task) => {
         const div = document.createElement('div');
         const titleLabel = document.createElement('h2');
-        const descriptionLabel = document.createElement('p');
+        const descriptionLabel = document.createElement('div');
         const dueDateLabel = document.createElement('p');
         const priorityLabel = document.createElement('p');
         const deleteButton = document.createElement('button');
         const editButton = document.createElement('button');
+
+        titleLabel.className = 'task-title';
+        descriptionLabel.className = 'task-description';
+        dueDateLabel.className = 'task-date';
+        priorityLabel.className = 'task-priority';
+        
 
         titleLabel.textContent = task.title;
         descriptionLabel.textContent = task.description;
@@ -59,60 +93,25 @@ const displayTasks = () => {
         deleteButton.textContent = 'Delete';
         editButton.textContent = 'Edit';
 
-        div.setAttribute('data-index', index);
 
         deleteButton.addEventListener('click', () => {
-            myTasks.splice(index, 1);
-            console.log(myTasks);
-            displayTasks();
+            removeTask(task);
         })
 
         editButton.addEventListener('click', () => {    
+            
+            submitButton.removeEventListener('click', createNewTask);
+            submitButton.addEventListener('click', updateTask);
+            submitButton.textContent = 'Update';
+
+            updateTask(task);
 
             taskForm.style.display = 'flex';
-
-            titleInput.value = task.title;
-            descriptionInput.value = task.description;
-            dueDateInput.value = task.date;
-            priorityInput.value = task.priority;
-
-            console.log('EDITAR');
-            const editIndex = parseInt(div.getAttribute('data-index'));
-
-            if (myTasks[editIndex]) {
-                // Verificar si el elemento en el índice es válido
-                submitButton.removeEventListener('click', createNewTask); // Eliminar el manejador de evento anterior
-                submitButton.textContent = 'Save Edit'; // Cambiar el texto del botón
-        
-                submitButton.addEventListener('click', () => {
-                    // Verificar si los campos están completos
-                    if (titleInput.value === '' || descriptionInput.value === '' || dueDateInput.value === '' || priorityInput.value === '') {
-                        alert('All fields are required');
-                    } else {
-                        // Actualizar el elemento en myTasks usando el índice
-                        myTasks[editIndex].title = titleInput.value;
-                        myTasks[editIndex].description = descriptionInput.value;
-                        myTasks[editIndex].date = dueDateInput.value;
-                        myTasks[editIndex].priority = priorityInput.value;
-        
-                        submitButton.textContent = 'Add Task'; 
-                        submitButton.removeEventListener('click', editButton); 
-                        submitButton.addEventListener('click', createNewTask); 
-        
-                        // Restablecer los campos del formulario
-                        titleInput.value = '';
-                        descriptionInput.value = '';
-                        dueDateInput.value = '';
-                        taskForm.style.display = 'none'; // Ocultar el formulario de edición
-                    }
-                });
-            } else {
-                console.log("Invalid index or task not found");
-            }
-
-            displayTasks();
-
+            submitButton.removeEventListener('click', updateTask);
+            submitButton.addEventListener('click', createNewTask);
         })
+        
+        submitButton.textContent = 'Add Task';
 
         div.appendChild(titleLabel);
         div.appendChild(descriptionLabel);
@@ -127,8 +126,23 @@ const displayTasks = () => {
     taskForm.style.display = 'none';
 };
 
+const removeTask = (task) => {
+    myTasks.splice(myTasks.indexOf(task), 1);
+    displayTasks();
+}
+
+const updateTask = (task) => {
+    selectedTask = task;
+    titleInput.value = task.title;
+    descriptionInput.value = task.description;
+    priorityInput.value = task.priority;
+    dueDateInput.value = task.date;
+}
+
+
 
 function allTasks() {
+
     addButtonClickListener();
     submitButton.addEventListener('click', createNewTask);
     displayTasks();
