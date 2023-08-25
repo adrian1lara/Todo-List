@@ -1,7 +1,36 @@
-import { isSameDay, parseISO } from "date-fns";
-import { myTasks } from "./allTasks";
-import { taskbox} from "..";
-import { removeTask } from "./allTasks";
+import Task from "./task";
+import { format, isSameDay, parseISO } from "date-fns";
+import { createNewTask, dueDateInput, myTasks } from "./allTasks";
+//import { taskbox} from "..";
+import { removeTask,  } from "./allTasks";
+import { titleInput, descriptionInput, priorityInput, addButtonClickListener } from "./allTasks";
+import { submitButton } from "./allTasks";
+import { taskForm } from "./allTasks";
+
+const taskContainer = document.getElementById('TodayTask');
+
+
+const createTodayTask = () => {
+    const newTitle = titleInput.value;
+    const newDescription = descriptionInput.value;
+    const dueDateValue = new Date();
+    const newPriority = priorityInput.value;
+
+    if (!newTitle || !newDescription || !newPriority) {
+        alert('All fields are required');
+        return;
+    }
+
+
+    const newTask = new Task(newTitle, newDescription, format(dueDateValue, 'yyyy-MM-dd'), newPriority);
+    myTasks.push(newTask);
+    displayTodayTasks();
+
+
+    titleInput.value = '';
+    descriptionInput.value = '';
+    
+}
 
 const displayTodayTasks = () => {
     const today = new Date()
@@ -11,7 +40,7 @@ const displayTodayTasks = () => {
         return isSameDay(taskDate, today);
     })
 
-    taskbox.innerHTML = '';
+    taskContainer.innerHTML = '';
     todayTask.forEach((task) => {
         const div = document.createElement('div');
         const titleLabel = document.createElement('h2');
@@ -51,13 +80,21 @@ const displayTodayTasks = () => {
         div.appendChild(deleteButton);
         div.appendChild(editButton);
 
-        taskbox.appendChild(div);
+        taskContainer.appendChild(div);
     })
 
+    taskForm.style.display = 'none';
 }
 
 function todayTasks() {
+
+    taskContainer.style.display = 'block';
+    addButtonClickListener();
+    dueDateInput.style.display = 'none';
+    submitButton.removeEventListener('click', createNewTask);
+    submitButton.addEventListener('click', createTodayTask);
     displayTodayTasks();
+    return taskContainer;
 }
 
-export default todayTasks;
+export { todayTasks , createTodayTask } ;
