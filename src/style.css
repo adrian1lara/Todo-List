@@ -69,4 +69,13 @@ header {
     z-index: 9999; 
 }
 
+#todayTask{
+    display: none;
+}
+
+#AllTask {
+    display: none;
+}
+
+
 
