@@ -1,7 +1,7 @@
 
 import { allTasks } from "./Components/allTasks";
 import impTasks from "./Components/impTasks";
-import todayTasks from "./Components/todayTasks";
+import { todayTasks } from "./Components/todayTasks";
 
 export const taskbox = document.getElementById('task');
 
