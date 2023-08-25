@@ -1,14 +1,15 @@
 import Task from './task.js'
-import { taskbox } from '../index.js';
+//import { taskbox } from '../index.js';
 import { format, parseISO, isValid } from 'date-fns';
+import { createTodayTask } from './todayTasks.js';
 
-
+const taskcontainer = document.getElementById('AllTask');
 
 export const taskForm = document.getElementById('task-form');
-const titleInput = document.getElementById('title');
-const descriptionInput = document.getElementById('description');
-const dueDateInput = document.getElementById('dueDate');
-const priorityInput = document.getElementById('priority');
+export const titleInput = document.getElementById('title');
+export const descriptionInput = document.getElementById('description');
+export const dueDateInput = document.getElementById('dueDate');
+export const priorityInput = document.getElementById('priority');
 export const submitButton = document.getElementById('addTask');
 
 
@@ -70,7 +71,7 @@ const createNewTask = () => {
 
 
 const displayTasks = () => {
-    taskbox.innerHTML = '';
+    taskcontainer.innerHTML = '';
     myTasks.forEach((task) => {
         const div = document.createElement('div');
         const titleLabel = document.createElement('h2');
@@ -96,6 +97,7 @@ const displayTasks = () => {
 
         deleteButton.addEventListener('click', () => {
             removeTask(task);
+            displayTasks();
         })
 
         editButton.addEventListener('click', () => {    
@@ -120,7 +122,7 @@ const displayTasks = () => {
         div.appendChild(deleteButton);
         div.appendChild(editButton);
 
-        taskbox.appendChild(div);
+        taskcontainer.appendChild(div);
     })
 
     taskForm.style.display = 'none';
@@ -128,7 +130,6 @@ const displayTasks = () => {
 
 const removeTask = (task) => {
     myTasks.splice(myTasks.indexOf(task), 1);
-    displayTasks();
 }
 
 const updateTask = (task) => {
@@ -142,11 +143,14 @@ const updateTask = (task) => {
 
 
 function allTasks() {
-
+    taskcontainer.style.display = 'block';
     addButtonClickListener();
+    dueDateInput.style.display = 'flex';
+    submitButton.removeEventListener('click', createTodayTask);
     submitButton.addEventListener('click', createNewTask);
     displayTasks();
 
-}
+    return taskcontainer;
+}   
 
-export { allTasks, myTasks, removeTask, updateTask };
+export { allTasks, myTasks, removeTask, updateTask, addButtonClickListener, createNewTask};
