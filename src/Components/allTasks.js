@@ -1,17 +1,18 @@
 import Task from './task.js'
 //import { taskbox } from '../index.js';
 import { format, parseISO, isValid } from 'date-fns';
-import { createTodayTask } from './todayTasks.js';
+import { showTodayForm } from './todayTasks.js';
+import '../style.css';
 
 const taskcontainer = document.getElementById('AllTask');
 
-export const taskForm = document.getElementById('task-form');
-export const titleInput = document.getElementById('title');
-export const descriptionInput = document.getElementById('description');
-export const dueDateInput = document.getElementById('dueDate');
-export const priorityInput = document.getElementById('priority');
-export const submitButton = document.getElementById('addTask');
-
+const taskForm = document.getElementById('task-form');
+const titleInput = document.getElementById('title');
+const descriptionInput = document.getElementById('description');
+const dueDateInput = document.getElementById('dueDate');
+const priorityInput = document.getElementById('priority');
+const submitButton = document.getElementById('addTask');
+export const showAllTaskForm = document.getElementById('addButton');
 
 
 let myTasks = []; 
@@ -20,8 +21,9 @@ let selectedTask = null;
 
 
 const addButtonClickListener = () => {
-    const addButton = document.getElementById('addButton');
-    addButton.addEventListener('click', () => {
+    showTodayForm.style.display = 'none';
+    showAllTaskForm.style.display = 'flex';
+    showAllTaskForm.addEventListener('click', () => {
         
         taskForm.style.display = 'flex';
 
@@ -81,11 +83,14 @@ const displayTasks = () => {
         const deleteButton = document.createElement('button');
         const editButton = document.createElement('button');
 
+
+        div.className = 'newTask-box';
         titleLabel.className = 'task-title';
         descriptionLabel.className = 'task-description';
         dueDateLabel.className = 'task-date';
         priorityLabel.className = 'task-priority';
-        
+        deleteButton.className = 'task-delete';
+        editButton.className = 'task-edit';
 
         titleLabel.textContent = task.title;
         descriptionLabel.textContent = task.description;
@@ -145,12 +150,10 @@ const updateTask = (task) => {
 function allTasks() {
     taskcontainer.style.display = 'block';
     addButtonClickListener();
-    dueDateInput.style.display = 'flex';
-    submitButton.removeEventListener('click', createTodayTask);
     submitButton.addEventListener('click', createNewTask);
     displayTasks();
 
     return taskcontainer;
 }   
 
-export { allTasks, myTasks, removeTask, updateTask, addButtonClickListener, createNewTask};
+export { allTasks, myTasks, removeTask };
