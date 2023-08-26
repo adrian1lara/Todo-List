@@ -42,6 +42,7 @@
                 <div>
                     <h2>Content displayed</h2>
                     <button id="addButton">+</button>
+                    <button id="showTodayForm">+</button>
                 </div>
                 
                 <form id="task-form">
@@ -63,6 +64,21 @@
 
                     <button  id="addTask" type="button">Add task</button>
 
+
+                </form>
+
+                <form id="todayTask-form">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" id="todayTitle" >
+                    <label for="description">Description:</label>
+                    <input type="text" name="description" id="todayDescription" >
+                    <label for="priority">Priority:</label>
+                    <select name="priority" id="todayPriority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                    <button id="addTodayTask" type="button">Add task</button>
 
                 </form>
                 
