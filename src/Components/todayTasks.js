@@ -51,7 +51,7 @@ const createTodayTask = () => {
 
     titleInput.value = '';
     descriptionInput.value = '';
-    
+    priorityInput.value = 'Low';
 }
 
 const displayTodayTasks = () => {
