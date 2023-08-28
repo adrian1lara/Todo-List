@@ -41,7 +41,7 @@ const createNewTask = () => {
     console.log('dueDateValue:', dueDateValue);
     console.log('newPriority:', newPriority);
 
-    if (!newTitle || !newDescription || !dueDateValue || !newPriority) {
+    if (!newTitle || !newDescription || !dueDateValue || !newPriority ) {
         alert('All fields are required');
         return;
     }
@@ -68,6 +68,7 @@ const createNewTask = () => {
     titleInput.value = '';
     descriptionInput.value = '';
     dueDateInput.value = '';
+    priorityInput.value = 'Low';
 };
 
 
