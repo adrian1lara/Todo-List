@@ -11,7 +11,15 @@ const titleInput = document.getElementById('todayTitle');
 const descriptionInput = document.getElementById('todayDescription');
 const priorityInput = document.getElementById('todayPriority');
 const submitTodayButton = document.getElementById('addTodayTask');
+const cancelTodayButton = document.getElementById('cancelTodayTask');
 export const showTodayForm = document.getElementById('showTodayForm');
+
+cancelTodayButton.addEventListener('click', () => {
+    todayTaskForm.style.display = 'none';
+    titleInput.value = '';
+    descriptionInput.value = '';
+    priorityInput.value = 'Low';
+})
 
 let selectedTodayTask = null;
 
@@ -89,7 +97,6 @@ const displayTodayTasks = () => {
         editButton.textContent = 'Edit';
 
         editButton.addEventListener('click', () => {
-            console.log("Editar");
             submitTodayButton.removeEventListener('click', createTodayTask);
             submitTodayButton.addEventListener('click', updateTodayTask);
             submitTodayButton.textContent = 'Update';
