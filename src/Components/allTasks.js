@@ -12,10 +12,18 @@ const descriptionInput = document.getElementById('description');
 const dueDateInput = document.getElementById('dueDate');
 const priorityInput = document.getElementById('priority');
 const submitButton = document.getElementById('addTask');
+const cancelButton = document.getElementById('cancelTask');
 export const showAllTaskForm = document.getElementById('addButton');
 
 
 let myTasks = []; 
+
+cancelButton.addEventListener('click', () => {
+    taskForm.style.display = 'none';
+    titleInput.value = '';
+    descriptionInput.value = '';
+    priorityInput.value = 'Low';
+})
 
 let selectedTask = null;
 
@@ -24,9 +32,7 @@ const addButtonClickListener = () => {
     showTodayForm.style.display = 'none';
     showAllTaskForm.style.display = 'flex';
     showAllTaskForm.addEventListener('click', () => {
-        
         taskForm.style.display = 'flex';
-
     })
 }
 
@@ -35,11 +41,6 @@ const createNewTask = () => {
     const newDescription = descriptionInput.value;
     const dueDateValue = parseISO(dueDateInput.value);
     const newPriority = priorityInput.value;
-
-    console.log('newTitle:', newTitle);
-    console.log('newDescription:', newDescription);
-    console.log('dueDateValue:', dueDateValue);
-    console.log('newPriority:', newPriority);
 
     if (!newTitle || !newDescription || !dueDateValue || !newPriority ) {
         alert('All fields are required');
